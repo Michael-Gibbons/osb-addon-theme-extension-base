@@ -7,7 +7,7 @@ import toml from 'toml'
 
 const config = toml.parse(fs.readFileSync(resolve(__dirname, 'src', 'shopify.theme.extension.toml'), 'utf8'))
 
-const ROOT_APP_DIRECTORY = resolve(process.cwd(), '../../../../..')// will need to change this
+const ROOT_APP_DIRECTORY = resolve(process.cwd(), '../../../..')
 const SHOPIFY_EXTENSIONS_DIRECTORY = resolve(ROOT_APP_DIRECTORY, 'extensions/')
 const OUTPUT_DIRECTORY = resolve(SHOPIFY_EXTENSIONS_DIRECTORY, config.name)
 
