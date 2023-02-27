@@ -5,8 +5,7 @@ import './index.css'
 
 import toml from 'toml'
 
-const config = toml.parse(fs.readFileSync(resolve(__dirname, 'src', 'shopify.theme.extension.toml'), 'utf8'))
-const EXTENSION_NAME = config.name
+const EXTENSION_NAME = 'osb-addon-theme-extension-base'
 
 const TARGET_ID = `OSB-theme-app-extension-${EXTENSION_NAME}`
 const TARGET = document.getElementById(TARGET_ID)
