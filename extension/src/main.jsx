@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 
-import toml from 'toml'
-
 const EXTENSION_NAME = 'osb-addon-theme-extension-base'
 
 const TARGET_ID = `OSB-theme-app-extension-${EXTENSION_NAME}`
