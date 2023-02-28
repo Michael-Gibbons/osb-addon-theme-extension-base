@@ -1,4 +1,4 @@
-# osb-addon-example
+# osb-addon-theme-extension-base
 
 ## Install
 
