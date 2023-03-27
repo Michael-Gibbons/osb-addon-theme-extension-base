@@ -1,47 +1,19 @@
 import fs from 'fs'
 import { resolve } from 'path'
-import toml from 'toml'
-import chokidar from 'chokidar'
 import shell from 'shelljs'
 
-const config = toml.parse(fs.readFileSync(resolve('./', 'src', 'shopify.theme.extension.toml'), 'utf8'))
-
-const watcher = chokidar.watch('src', {
-  ignored: /(^|[\/\\])\../, // ignore dotfiles
-  persistent: true
-});
-
-const log = console.log.bind(console);
-let ready = false
-
-watcher
-  .on('add', path => {
-    log(`File ${path} has been added`)
-
-    if(ready){
-      shell.exec(`npm run build`)
-      console.log(`${config.name}: Build Complete!`)
+// Waits for HOST.txt to become available (shopify assigns a dynamic ngrok url) so we can spin up our development server with the server url
+async function getHostfromFile(){
+  const PATH_TO_HOST_FILE = resolve('../../../../HOST.txt')
+  const hostPollingInterval = setInterval(() => {
+    if(fs.existsSync(PATH_TO_HOST_FILE)){
+      const HOST = fs.readFileSync(PATH_TO_HOST_FILE, {encoding:'utf8', flag:'r'});
+      if(HOST){
+        clearInterval(hostPollingInterval)
+        shell.exec(`cross-env EXTENSION_MODE=development DEV_HOST=${HOST} vite build --watch`)
+      }
     }
+  }, 100)
+}
 
-  })
-  .on('change', path => {
-    log(`File ${path} has been changed`)
-
-    if(ready){
-      shell.exec(`npm run build`)
-      console.log(`${config.name}: Build Complete!`)
-    }
-  })
-  .on('unlink', path => {
-    log(`File ${path} has been removed`)
-
-    if(ready){
-      shell.exec(`npm run build`)
-      console.log(`${config.name}: Build Complete!`)
-    }
-  })
-  .on('ready', () => {
-    ready = true
-    log(`Listening for changes in /extensions/addons/${config.name}/src`)
-  })
-  .on('error', error => log(`Watcher error: ${error}`))
+getHostfromFile()

@@ -1,0 +1,23 @@
+<script>
+  window.dyode = {}
+  window.dyode.osb = {}
+  window.dyode.osb.lexicon = {
+    article: {{ article | json }},
+    blog: {{ blog | json }},
+    cart: {{ cart | json }},
+    collection: {{ collection | json }},
+    customer: {{ customer | json }},
+    page: {{ page | json }},
+    product: {{ product | json }},
+    settings: {{ settings | json }},
+    shop: {
+      domain: "{{ shop.domain }}"
+    },
+    section: {
+      settings: {{ section.settings | json }},
+    },
+    block: {
+      settings: {{ block.settings | json }}
+    }
+  }
+</script>
